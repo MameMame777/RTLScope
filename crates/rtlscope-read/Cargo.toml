@@ -1,0 +1,16 @@
+[package]
+name = "rtlscope-read"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Turns paths into an elaborated design: Veryl built, SystemVerilog lowered, diagnostics gathered in the order things happened."
+
+[dependencies]
+rtlscope-ir.workspace = true
+rtlscope-sv.workspace = true
+rtlscope-veryl.workspace = true
+rtlscope-elab.workspace = true
+
+[dev-dependencies]
+rtlscope-fixtures.workspace = true

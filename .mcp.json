@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "rtlscope": {
+      "command": "cargo",
+      "args": ["run", "--quiet", "--release", "-p", "rtlscope-mcp"]
+    }
+  }
+}

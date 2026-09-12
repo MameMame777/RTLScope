@@ -1,0 +1,59 @@
+/// The sequence: wait for a start, run until the timer ticks, pause for one
+/// more tick, then hold Done until the button is let go.
+module Control (
+    i_clk  : input   clock       ,
+    i_rst  : input   reset       ,
+    i_start: input   logic       ,
+    t      : modport Ticker::user,
+    o_busy : output  logic       ,
+) {
+    enum State: logic<2> {
+        Idle,
+        Run,
+        Pause,
+        Done,
+    }
+
+    var state     : State;
+    var state_next: State;
+
+    // The register: one flop, reset to Idle.
+    always_ff {
+        if_reset {
+            state = State::Idle;
+        } else {
+            state = state_next;
+        }
+    }
+
+    // The next state, from where we are and what came in.
+    always_comb {
+        state_next = state;
+        case state {
+            State::Idle: {
+                if i_start {
+                    state_next = State::Run;
+                }
+            }
+            State::Run: {
+                if t.tick {
+                    state_next = State::Pause;
+                }
+            }
+            State::Pause: {
+                if t.tick {
+                    state_next = State::Done;
+                }
+            }
+            State::Done: {
+                if !i_start {
+                    state_next = State::Idle;
+                }
+            }
+            default: state_next = State::Idle;
+        }
+    }
+
+    assign t.enable = state == State::Run || state == State::Pause;
+    assign o_busy   = state != State::Idle;
+}

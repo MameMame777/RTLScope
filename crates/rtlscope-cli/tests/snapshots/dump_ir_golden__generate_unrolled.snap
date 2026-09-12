@@ -1,0 +1,87 @@
+---
+source: crates/rtlscope-cli/tests/dump_ir_golden.rs
+expression: "report(\"genblk.sv\", None)"
+---
+{
+  "modules": [
+    {
+      "base_name": "genblk",
+      "instances": [],
+      "location": "genblk.sv:4:1",
+      "name": "genblk",
+      "nets": [
+        "clk",
+        "[7:0] din",
+        "[7:0] dout",
+        "[7:0] tap [4]"
+      ],
+      "params": [
+        "parameter TAPS = 4",
+        "parameter W = 8",
+        "parameter BYPASS = 0"
+      ],
+      "ports": [
+        "input  clk",
+        "input  [7:0] din",
+        "output [7:0] dout"
+      ],
+      "processes": [
+        {
+          "kind": "ff posedge clk",
+          "location": "genblk.sv:23:21",
+          "reads": [
+            "clk",
+            "din"
+          ],
+          "writes": [
+            "tap[0]"
+          ]
+        },
+        {
+          "kind": "ff posedge clk",
+          "location": "genblk.sv:25:21",
+          "reads": [
+            "clk",
+            "tap[0]"
+          ],
+          "writes": [
+            "tap[1]"
+          ]
+        },
+        {
+          "kind": "ff posedge clk",
+          "location": "genblk.sv:25:21",
+          "reads": [
+            "clk",
+            "tap[1]"
+          ],
+          "writes": [
+            "tap[2]"
+          ]
+        },
+        {
+          "kind": "ff posedge clk",
+          "location": "genblk.sv:25:21",
+          "reads": [
+            "clk",
+            "tap[2]"
+          ],
+          "writes": [
+            "tap[3]"
+          ]
+        },
+        {
+          "kind": "comb",
+          "location": "genblk.sv:28:20",
+          "reads": [
+            "tap[3]"
+          ],
+          "writes": [
+            "dout"
+          ]
+        }
+      ]
+    }
+  ],
+  "top": "genblk"
+}

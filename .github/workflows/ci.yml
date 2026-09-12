@@ -1,0 +1,58 @@
+# What a clone has to pass, on a machine with nothing but Rust on it.
+#
+# Windows, because that is where the tool is developed and packaged, and where
+# the installer and the font lookup are exercised. The simulator-backed tests
+# skip themselves on a runner without Verilator, Icarus or a cocotb venv — each
+# skip says why — so what runs here is everything that needs no toolchain:
+# parsing, elaboration, the analyses, layout, the views, and the fixtures'
+# invariants.
+#
+# The notices check is here because it is the kind of thing that goes stale
+# silently: a dependency bump changes what the binary carries, and nobody
+# re-reads THIRD-PARTY-NOTICES.md.
+
+name: ci
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  check:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: fmt
+        run: cargo fmt --all -- --check
+
+      - name: build
+        run: cargo build --workspace --all-targets
+
+      - name: test
+        run: cargo test --workspace --no-fail-fast
+
+      # Warnings fail, because the tree is clean today and the only way it stays
+      # that way is if the first warning is somebody's problem.
+      - name: clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: third-party notices are current
+        run: python scripts/third_party_notices.py --check

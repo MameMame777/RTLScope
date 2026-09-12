@@ -1,0 +1,113 @@
+---
+source: crates/rtlscope-cli/tests/dump_ports_golden.rs
+expression: "report(\"fifo.sv\")"
+---
+{
+  "files": [
+    "fifo.sv"
+  ],
+  "modules": [
+    {
+      "ansi_header": true,
+      "instances": [],
+      "location": "fifo.sv:4:1",
+      "name": "fifo",
+      "nets": [
+        {
+          "name": "mem",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": "[0:(DEPTH - 1)]"
+        },
+        {
+          "name": "wr_ptr",
+          "net_type": "logic",
+          "packed": "[AW:0]",
+          "unpacked": null
+        },
+        {
+          "name": "rd_ptr",
+          "net_type": "logic",
+          "packed": "[AW:0]",
+          "unpacked": null
+        }
+      ],
+      "params": [
+        {
+          "default": "8",
+          "local": false,
+          "name": "W"
+        },
+        {
+          "default": "16",
+          "local": false,
+          "name": "DEPTH"
+        },
+        {
+          "default": "$clog2(DEPTH)",
+          "local": true,
+          "name": "AW"
+        }
+      ],
+      "ports": [
+        {
+          "dir": "input",
+          "name": "clk",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "rst_n",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "wr_en",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "wr_data",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "rd_en",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "output",
+          "name": "rd_data",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": null
+        },
+        {
+          "dir": "output",
+          "name": "full",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "output",
+          "name": "empty",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        }
+      ],
+      "skipped": []
+    }
+  ]
+}

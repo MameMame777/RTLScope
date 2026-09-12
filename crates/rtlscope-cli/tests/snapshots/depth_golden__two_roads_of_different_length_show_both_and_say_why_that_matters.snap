@@ -1,0 +1,20 @@
+---
+source: crates/rtlscope-cli/tests/depth_golden.rs
+expression: "rendered(\"reconverge.sv\", Some(\"reconverge\"), \"a\", \"sum\")"
+---
+a -> sum: 2 to 3 clock(s) on clk
+
+W001 the value arrives 2 clock(s) one way and 3 the other
+  Almost always one branch was pipelined and the other was not, and
+  the control signal no longer lines up with the data it escorts. Both
+  numbers are given because the average is a depth that is nowhere in
+  the design.
+
+2 way(s) through
+  2:
+    fast at <fixtures>/reconverge.sv:24:17
+    sum at <fixtures>/reconverge.sv:19:24
+  3:
+    slow_one at <fixtures>/reconverge.sv:22:17
+    slow_two at <fixtures>/reconverge.sv:23:17
+    sum at <fixtures>/reconverge.sv:19:24

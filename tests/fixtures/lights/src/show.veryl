@@ -1,0 +1,17 @@
+import Defs::*;
+
+/// The lights, walking along one step per tick while the sequence runs.
+module Show (
+    i_clk: input   clock        ,
+    i_rst: input   reset        ,
+    t    : modport Ticker::watch,
+    o_led: output  logic<LEDS>  ,
+) {
+    always_ff {
+        if_reset {
+            o_led = first_led();
+        } else if t.enable && t.tick {
+            o_led = {o_led[LEDS - 2:0], o_led[LEDS - 1]};
+        }
+    }
+}

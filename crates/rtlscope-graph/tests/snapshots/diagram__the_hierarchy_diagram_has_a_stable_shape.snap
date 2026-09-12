@@ -1,0 +1,33 @@
+---
+source: crates/rtlscope-graph/tests/diagram.rs
+assertion_line: 373
+expression: "lines.join(\"\\n\")"
+---
+module hier_top
+box     38,41      96x54   InputPort op
+box     38,129     96x54   InputPort clk
+box     24,217    110x54   InputPort raddr
+box     24,305    110x54   InputPort waddr
+box     38,393     96x54   InputPort we
+box     24,481    110x54   InputPort rst_n
+box     24,569    110x54   InputPort start
+box    244,41     110x98   Instance u_ctrl : hier_ctrl
+box    244,173    110x142  Instance u_rf : hier_regfile
+box    464,41      96x98   Instance u_alu : hier_alu
+box    670,41     124x54   Process comb
+box    904,41      96x54   OutputPort busy
+box    904,129    124x54   OutputPort result
+wire Clock clk          134,156 -> 148,156 -> 148,200 -> 244,200
+wire Clock clk          134,156 -> 157,156 -> 157,68 -> 244,68
+wire Reset rst_n        134,508 -> 166,508 -> 166,90 -> 244,90
+wire Signal alu_y[31:0]  560,68 -> 588,68 -> 588,657 -> 216,657 -> 216,266 -> 244,266
+wire Signal alu_y[31:0]  560,68 -> 670,68
+wire Signal busy         354,68 -> 368,68 -> 368,24 -> 808,24 -> 808,68 -> 904,68
+wire Signal op[1:0]      134,68 -> 148,68 -> 148,156 -> 368,156 -> 368,112 -> 464,112
+wire Signal raddr[3:0]   134,244 -> 148,244 -> 148,288 -> 244,288
+wire Signal result[31:0] 794,68 -> 808,68 -> 808,156 -> 904,156
+wire Signal rf_rdata[31:0] 354,200 -> 368,200 -> 368,68 -> 464,68
+wire Signal rf_rdata[31:0] 354,200 -> 368,200 -> 368,90 -> 464,90
+wire Signal start        134,596 -> 175,596 -> 175,112 -> 244,112
+wire Signal waddr[3:0]   134,332 -> 148,332 -> 148,244 -> 244,244
+wire Signal we           134,420 -> 148,420 -> 148,222 -> 244,222

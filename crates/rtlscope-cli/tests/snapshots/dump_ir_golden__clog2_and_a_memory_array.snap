@@ -1,0 +1,100 @@
+---
+source: crates/rtlscope-cli/tests/dump_ir_golden.rs
+assertion_line: 58
+expression: "report(\"fifo.sv\", None)"
+---
+{
+  "modules": [
+    {
+      "base_name": "fifo",
+      "instances": [],
+      "location": "fifo.sv:4:1",
+      "name": "fifo",
+      "nets": [
+        "clk",
+        "rst_n",
+        "wr_en",
+        "[7:0] wr_data",
+        "rd_en",
+        "[7:0] rd_data",
+        "full",
+        "empty",
+        "[7:0] mem [16]",
+        "[4:0] wr_ptr",
+        "[4:0] rd_ptr"
+      ],
+      "params": [
+        "parameter W = 8",
+        "parameter DEPTH = 16",
+        "localparam AW = 4"
+      ],
+      "ports": [
+        "input  clk",
+        "input  rst_n",
+        "input  wr_en",
+        "input  [7:0] wr_data",
+        "input  rd_en",
+        "output [7:0] rd_data",
+        "output full",
+        "output empty"
+      ],
+      "processes": [
+        {
+          "kind": "comb",
+          "location": "fifo.sv:24:12",
+          "reads": [
+            "wr_ptr",
+            "rd_ptr"
+          ],
+          "writes": [
+            "full"
+          ]
+        },
+        {
+          "kind": "comb",
+          "location": "fifo.sv:25:12",
+          "reads": [
+            "wr_ptr",
+            "rd_ptr"
+          ],
+          "writes": [
+            "empty"
+          ]
+        },
+        {
+          "kind": "ff posedge clk, async reset rst_n active low",
+          "location": "fifo.sv:27:5",
+          "reads": [
+            "clk",
+            "rst_n",
+            "wr_en",
+            "full",
+            "wr_ptr",
+            "wr_data"
+          ],
+          "writes": [
+            "wr_ptr",
+            "mem"
+          ]
+        },
+        {
+          "kind": "ff posedge clk, async reset rst_n active low",
+          "location": "fifo.sv:36:5",
+          "reads": [
+            "clk",
+            "rst_n",
+            "rd_en",
+            "empty",
+            "mem",
+            "rd_ptr"
+          ],
+          "writes": [
+            "rd_ptr",
+            "rd_data"
+          ]
+        }
+      ]
+    }
+  ],
+  "top": "fifo"
+}

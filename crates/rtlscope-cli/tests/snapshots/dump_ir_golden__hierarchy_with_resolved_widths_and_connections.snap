@@ -1,0 +1,208 @@
+---
+source: crates/rtlscope-cli/tests/dump_ir_golden.rs
+expression: "report(\"hier.sv\", Some(\"hier_top\"))"
+---
+{
+  "modules": [
+    {
+      "base_name": "hier_alu",
+      "instances": [],
+      "location": "hier.sv:4:1",
+      "name": "hier_alu",
+      "nets": [
+        "[31:0] a",
+        "[31:0] b",
+        "[1:0] op",
+        "[31:0] y"
+      ],
+      "params": [
+        "parameter W = 32"
+      ],
+      "ports": [
+        "input  [31:0] a",
+        "input  [31:0] b",
+        "input  [1:0] op",
+        "output [31:0] y"
+      ],
+      "processes": [
+        {
+          "kind": "comb",
+          "location": "hier.sv:13:5",
+          "reads": [
+            "op",
+            "a",
+            "b"
+          ],
+          "writes": [
+            "y"
+          ]
+        }
+      ]
+    },
+    {
+      "base_name": "hier_regfile",
+      "instances": [],
+      "location": "hier.sv:24:1",
+      "name": "hier_regfile",
+      "nets": [
+        "clk",
+        "we",
+        "[3:0] waddr",
+        "[31:0] wdata",
+        "[3:0] raddr",
+        "[31:0] rdata",
+        "[31:0] regs [16]"
+      ],
+      "params": [
+        "parameter W = 32",
+        "parameter AW = 4"
+      ],
+      "ports": [
+        "input  clk",
+        "input  we",
+        "input  [3:0] waddr",
+        "input  [31:0] wdata",
+        "input  [3:0] raddr",
+        "output [31:0] rdata"
+      ],
+      "processes": [
+        {
+          "kind": "ff posedge clk",
+          "location": "hier.sv:38:5",
+          "reads": [
+            "clk",
+            "we",
+            "waddr",
+            "wdata"
+          ],
+          "writes": [
+            "regs"
+          ]
+        },
+        {
+          "kind": "comb",
+          "location": "hier.sv:43:12",
+          "reads": [
+            "regs",
+            "raddr"
+          ],
+          "writes": [
+            "rdata"
+          ]
+        }
+      ]
+    },
+    {
+      "base_name": "hier_ctrl",
+      "instances": [],
+      "location": "hier.sv:47:1",
+      "name": "hier_ctrl",
+      "nets": [
+        "clk",
+        "rst_n",
+        "start",
+        "busy"
+      ],
+      "params": [],
+      "ports": [
+        "input  clk",
+        "input  rst_n",
+        "input  start",
+        "output busy"
+      ],
+      "processes": [
+        {
+          "kind": "ff posedge clk, async reset rst_n active low",
+          "location": "hier.sv:54:5",
+          "reads": [
+            "clk",
+            "rst_n",
+            "start"
+          ],
+          "writes": [
+            "busy"
+          ]
+        }
+      ]
+    },
+    {
+      "base_name": "hier_top",
+      "instances": [
+        {
+          "connections": [
+            ".a(rf_rdata)",
+            ".b(rf_rdata)",
+            ".op(op)",
+            ".y(alu_y)"
+          ],
+          "name": "u_alu",
+          "of": "hier_alu"
+        },
+        {
+          "connections": [
+            ".clk(clk)",
+            ".we(we)",
+            ".waddr(waddr)",
+            ".wdata(alu_y)",
+            ".raddr(raddr)",
+            ".rdata(rf_rdata)"
+          ],
+          "name": "u_rf",
+          "of": "hier_regfile"
+        },
+        {
+          "connections": [
+            ".clk(clk)",
+            ".rst_n(rst_n)",
+            ".start(start)",
+            ".busy(busy)"
+          ],
+          "name": "u_ctrl",
+          "of": "hier_ctrl"
+        }
+      ],
+      "location": "hier.sv:63:1",
+      "name": "hier_top",
+      "nets": [
+        "clk",
+        "rst_n",
+        "start",
+        "[1:0] op",
+        "[3:0] raddr",
+        "[3:0] waddr",
+        "we",
+        "[31:0] result",
+        "busy",
+        "[31:0] rf_rdata",
+        "[31:0] alu_y"
+      ],
+      "params": [
+        "parameter W = 32"
+      ],
+      "ports": [
+        "input  clk",
+        "input  rst_n",
+        "input  start",
+        "input  [1:0] op",
+        "input  [3:0] raddr",
+        "input  [3:0] waddr",
+        "input  we",
+        "output [31:0] result",
+        "output busy"
+      ],
+      "processes": [
+        {
+          "kind": "comb",
+          "location": "hier.sv:96:12",
+          "reads": [
+            "alu_y"
+          ],
+          "writes": [
+            "result"
+          ]
+        }
+      ]
+    }
+  ],
+  "top": "hier_top"
+}

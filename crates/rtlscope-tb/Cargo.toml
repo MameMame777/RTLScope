@@ -1,0 +1,24 @@
+[package]
+name = "rtlscope-tb"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Generating testbenches and dumps from the IR"
+
+[dependencies]
+rtlscope-ir.workspace = true
+rtlscope-analyse.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+rtlscope-sv.workspace = true
+rtlscope-elab.workspace = true
+rtlscope-fixtures.workspace = true
+# The simulation test checks that a dump of a driven pipeline comes out, which
+# means reading it back the way every other view does.
+rtlscope-wave.workspace = true
+insta.workspace = true

@@ -1,0 +1,10 @@
+* text=auto
+
+# Golden-test inputs and snapshots must stay LF on every platform:
+# a CRLF checkout shifts byte offsets and breaks Span/snapshot equality.
+*.sv   text eol=lf
+*.svh  text eol=lf
+*.f    text eol=lf
+*.snap text eol=lf
+*.rs   text eol=lf
+*.toml text eol=lf

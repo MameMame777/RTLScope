@@ -1,0 +1,18 @@
+---
+source: crates/rtlscope-cli/tests/wave_golden.rs
+expression: "rtlscope_cli::cmd::tb::results_text(&run, Some(&dump), \"pipeline3.vcd\")"
+---
+2 test(s): 1 passed, 1 failed, 0 skipped
+400 ns of simulation in all
+
+pipeline3.vcd: one tick is 1 ns, and it ends at 405
+
+             0 → 300           passed   test_pipeline3.bursts
+        tb/test_pipeline3.py:21
+        tick 300 in pipeline3.vcd
+           300 → 400           FAILED   test_pipeline3.out_data_is_the_input_plus_one
+        AssertionError: beat 3: out_data 0xfffe, wanted 0x1
+        tb/test_pipeline3.py:37
+        tick 400 in pipeline3.vcd
+
+The file records how long each test ran, not when it started, so the moments above are those durations added up in the order the file lists them. That holds when the tests ran back to back in one simulation, which is how cocotb runs them.

@@ -1,0 +1,9 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1788065115" />
+    <testcase name="bursts" classname="test_pipeline3" file="tb/test_pipeline3.py" lineno="21" time="0.026998519897460938" sim_time_ns="300.0" ratio_time="49261.959731543626" />
+    <testcase name="out_data_is_the_input_plus_one" classname="test_pipeline3" file="tb/test_pipeline3.py" lineno="37" time="0.014404296875" sim_time_ns="100.0" ratio_time="6942.0">
+      <failure error_type="AssertionError" error_msg="beat 3: out_data 0xfffe, wanted 0x1" />
+    </testcase>
+  </testsuite>
+</testsuites>

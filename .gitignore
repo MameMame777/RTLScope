@@ -1,0 +1,41 @@
+/target
+**/*.rs.bk
+*.pending-snap
+# insta writes a rejected snapshot beside the accepted one. Committing that
+# by accident would record a failure as if it had been approved.
+*.snap.new
+
+# simulation / generated artifacts
+*.vcd
+*.fst
+# ...except the small hand-checked ones the tests read.
+!crates/*/tests/data/*.vcd
+!crates/*/tests/data/*.fst
+!tests/fixtures/waves/*.vcd
+!tests/fixtures/waves/*.fst
+/out
+/sim
+/tb
+
+# The Python 3.10 virtualenv cocotb runs from. See the README: the default
+# `python` here is MSYS2's, which cannot install it.
+/.venv-cocotb
+*.svg
+!docs/**/*.svg
+
+# Real RTL brought in for testing. Not committed by default: it is the user's
+# design, not part of the tool. Remove this line to track it deliberately.
+/tests/fixtures/rtl/
+
+# What `veryl build` leaves beside a Veryl project: its cache and lock. The
+# generated SystemVerilog and source maps under `target/` are committed on
+# purpose, so the fixture reads on a machine without Veryl.
+/tests/fixtures/lights/.build/
+/tests/fixtures/lights/Veryl.lock
+/tests/fixtures/lights/dependencies/
+
+# Drafts. Working notes for an article and for the README, with this machine's
+# paths and half-finished sections in them: not part of the tool, and not for
+# the public repository.
+/Qiita/
+/README_draft.md

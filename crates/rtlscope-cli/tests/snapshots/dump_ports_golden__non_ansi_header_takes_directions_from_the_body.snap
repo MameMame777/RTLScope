@@ -1,0 +1,57 @@
+---
+source: crates/rtlscope-cli/tests/dump_ports_golden.rs
+expression: "report(\"nonansi.sv\")"
+---
+{
+  "files": [
+    "nonansi.sv"
+  ],
+  "modules": [
+    {
+      "ansi_header": false,
+      "instances": [],
+      "location": "nonansi.sv:4:1",
+      "name": "nonansi",
+      "nets": [
+        {
+          "name": "q",
+          "net_type": "reg",
+          "packed": "[7:0]",
+          "unpacked": null
+        }
+      ],
+      "params": [],
+      "ports": [
+        {
+          "dir": "input",
+          "name": "clk",
+          "net_type": null,
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "rst_n",
+          "net_type": null,
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "d",
+          "net_type": null,
+          "packed": "[7:0]",
+          "unpacked": null
+        },
+        {
+          "dir": "output",
+          "name": "q",
+          "net_type": null,
+          "packed": "[7:0]",
+          "unpacked": null
+        }
+      ],
+      "skipped": []
+    }
+  ]
+}

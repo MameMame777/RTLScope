@@ -1,0 +1,142 @@
+---
+source: crates/rtlscope-cli/tests/dump_ir_golden.rs
+expression: "report(\"task_loop.sv\", Some(\"task_loop\"))"
+---
+{
+  "modules": [
+    {
+      "base_name": "task_loop",
+      "instances": [],
+      "location": "task_loop.sv:9:1",
+      "name": "task_loop",
+      "nets": [
+        "clk",
+        "[1:0] addr",
+        "[7:0] value",
+        "[2:0] amount",
+        "[7:0] picked",
+        "[7:0] rotated",
+        "[3:0] rated",
+        "[7:0] rom_data",
+        "[3:0] counted",
+        "[7:0] rom [4]",
+        "[1:0] pick.0.idx",
+        "[7:0] pick.0.v",
+        "[7:0] pick.0.byte_out",
+        "[7:0] rotate_right8.1",
+        "[7:0] rotate_right8.1.v",
+        "[2:0] rotate_right8.1.n",
+        "[7:0] rotate_right8.1.result",
+        "[3:0] rate.2",
+        "[7:0] rate.2.d",
+        "[3:0] rate.2.score",
+        "rate.2.returned$",
+        "[3:0] ones4.3",
+        "[3:0] ones4.3.bits"
+      ],
+      "params": [],
+      "ports": [
+        "input  clk",
+        "input  [1:0] addr",
+        "input  [7:0] value",
+        "input  [2:0] amount",
+        "output [7:0] picked",
+        "output [7:0] rotated",
+        "output [3:0] rated",
+        "output [7:0] rom_data",
+        "output [3:0] counted"
+      ],
+      "processes": [
+        {
+          "kind": "initial",
+          "location": "task_loop.sv:70:5",
+          "reads": [],
+          "writes": [
+            "rom"
+          ]
+        },
+        {
+          "kind": "comb",
+          "location": "task_loop.sv:77:5",
+          "reads": [
+            "addr",
+            "value",
+            "pick.0.idx",
+            "pick.0.v",
+            "pick.0.byte_out"
+          ],
+          "writes": [
+            "pick.0.idx",
+            "pick.0.v",
+            "pick.0.byte_out",
+            "picked"
+          ]
+        },
+        {
+          "kind": "comb",
+          "location": "task_loop.sv:81:12",
+          "reads": [
+            "value",
+            "amount",
+            "rotate_right8.1.v",
+            "rotate_right8.1.n",
+            "rotate_right8.1.result",
+            "rotate_right8.1"
+          ],
+          "writes": [
+            "rotate_right8.1.v",
+            "rotate_right8.1.n",
+            "rotate_right8.1.result",
+            "rotate_right8.1",
+            "rotated"
+          ]
+        },
+        {
+          "kind": "comb",
+          "location": "task_loop.sv:82:12",
+          "reads": [
+            "value",
+            "rate.2.d",
+            "rate.2.score",
+            "rate.2.returned$",
+            "rate.2"
+          ],
+          "writes": [
+            "rate.2.d",
+            "rate.2.returned$",
+            "rate.2.score",
+            "rate.2",
+            "rated"
+          ]
+        },
+        {
+          "kind": "comb",
+          "location": "task_loop.sv:83:12",
+          "reads": [
+            "value[3:0]",
+            "ones4.3.bits",
+            "ones4.3"
+          ],
+          "writes": [
+            "ones4.3.bits",
+            "ones4.3",
+            "counted"
+          ]
+        },
+        {
+          "kind": "ff posedge clk",
+          "location": "task_loop.sv:85:5",
+          "reads": [
+            "clk",
+            "rom",
+            "addr"
+          ],
+          "writes": [
+            "rom_data"
+          ]
+        }
+      ]
+    }
+  ],
+  "top": "task_loop"
+}

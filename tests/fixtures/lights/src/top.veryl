@@ -1,0 +1,38 @@
+/// A start button, a timer, a little state machine, and a row of lights.
+///
+/// Small on purpose: three modules under one clock, so every view has
+/// something to show and nothing to hide it behind. What they share — how
+/// many lights, how fast — is in the `Defs` package, and the timer's two
+/// wires travel as one `Ticker` bundle.
+module Top (
+    i_clk  : input  clock            ,
+    i_rst  : input  reset            ,
+    i_start: input  logic            ,
+    o_busy : output logic            ,
+    o_led  : output logic<Defs::LEDS>,
+) {
+    inst t: Ticker;
+
+    inst u_timer: Timer #(
+        LIMIT: Defs::TICKS,
+    ) (
+        i_clk,
+        i_rst,
+        t    ,
+    );
+
+    inst u_ctrl: Control (
+        i_clk  ,
+        i_rst  ,
+        i_start,
+        t      ,
+        o_busy ,
+    );
+
+    inst u_show: Show (
+        i_clk,
+        i_rst,
+        t    ,
+        o_led,
+    );
+}

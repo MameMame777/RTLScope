@@ -1,0 +1,7 @@
+---
+source: crates/rtlscope-cli/tests/depth_golden.rs
+expression: "rendered(\"comb_loop.sv\", Some(\"comb_loop\"), \"seed\", \"out_knot\")"
+---
+E002 a value on the road decides itself: knot_a -> knot_b
+  it never settles, so counting the clocks it takes counts
+  something that does not happen. `rtlscope lint` reports the loop

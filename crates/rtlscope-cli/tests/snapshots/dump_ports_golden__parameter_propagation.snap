@@ -1,0 +1,139 @@
+---
+source: crates/rtlscope-cli/tests/dump_ports_golden.rs
+expression: "report(\"params.sv\")"
+---
+{
+  "files": [
+    "params.sv"
+  ],
+  "modules": [
+    {
+      "ansi_header": true,
+      "instances": [],
+      "location": "params.sv:4:1",
+      "name": "params_subsub",
+      "nets": [],
+      "params": [
+        {
+          "default": "4",
+          "local": false,
+          "name": "W"
+        }
+      ],
+      "ports": [
+        {
+          "dir": "input",
+          "name": "i",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": null
+        },
+        {
+          "dir": "output",
+          "name": "o",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": null
+        }
+      ],
+      "skipped": []
+    },
+    {
+      "ansi_header": true,
+      "instances": [
+        {
+          "connection_count": 2,
+          "connection_style": "named",
+          "module": "params_subsub",
+          "name": "u_ss",
+          "param_overrides": [
+            ".W(W)"
+          ]
+        }
+      ],
+      "location": "params.sv:15:1",
+      "name": "params_sub",
+      "nets": [],
+      "params": [
+        {
+          "default": "8",
+          "local": false,
+          "name": "W"
+        }
+      ],
+      "ports": [
+        {
+          "dir": "input",
+          "name": "i",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": null
+        },
+        {
+          "dir": "output",
+          "name": "o",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": null
+        }
+      ],
+      "skipped": []
+    },
+    {
+      "ansi_header": true,
+      "instances": [
+        {
+          "connection_count": 2,
+          "connection_style": "named",
+          "module": "params_sub",
+          "name": "u_wide",
+          "param_overrides": [
+            ".W(16)"
+          ]
+        },
+        {
+          "connection_count": 2,
+          "connection_style": "named",
+          "module": "params_sub",
+          "name": "u_default",
+          "param_overrides": []
+        }
+      ],
+      "location": "params.sv:26:1",
+      "name": "params_top",
+      "nets": [],
+      "params": [],
+      "ports": [
+        {
+          "dir": "input",
+          "name": "a",
+          "net_type": "logic",
+          "packed": "[15:0]",
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "b",
+          "net_type": "logic",
+          "packed": "[7:0]",
+          "unpacked": null
+        },
+        {
+          "dir": "output",
+          "name": "ya",
+          "net_type": "logic",
+          "packed": "[15:0]",
+          "unpacked": null
+        },
+        {
+          "dir": "output",
+          "name": "yb",
+          "net_type": "logic",
+          "packed": "[7:0]",
+          "unpacked": null
+        }
+      ],
+      "skipped": []
+    }
+  ]
+}

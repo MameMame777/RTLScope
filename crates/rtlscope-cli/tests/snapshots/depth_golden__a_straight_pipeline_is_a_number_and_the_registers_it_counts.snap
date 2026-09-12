@@ -1,0 +1,11 @@
+---
+source: crates/rtlscope-cli/tests/depth_golden.rs
+expression: "rendered(\"pipeline3.sv\", Some(\"pipeline3\"), \"in_data\", \"out_data\")"
+---
+in_data -> out_data: 3 clock(s) on clk
+
+1 way(s) through
+  3:
+    data_d1 at <fixtures>/pipeline3.sv:17:19
+    data_d2 at <fixtures>/pipeline3.sv:17:29
+    data_d3 at <fixtures>/pipeline3.sv:17:39

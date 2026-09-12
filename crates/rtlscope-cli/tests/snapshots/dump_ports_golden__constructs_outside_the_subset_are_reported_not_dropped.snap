@@ -1,0 +1,116 @@
+---
+source: crates/rtlscope-cli/tests/dump_ports_golden.rs
+expression: "report(\"unsupported.sv\")"
+---
+{
+  "files": [
+    "unsupported.sv"
+  ],
+  "modules": [
+    {
+      "ansi_header": true,
+      "instances": [],
+      "location": "unsupported.sv:5:1",
+      "name": "unsupported",
+      "nets": [
+        {
+          "name": "shadow",
+          "net_type": "logic",
+          "packed": "[3:0]",
+          "unpacked": null
+        }
+      ],
+      "params": [],
+      "ports": [
+        {
+          "dir": "input",
+          "name": "clk",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "sel",
+          "net_type": "logic",
+          "packed": "[3:0]",
+          "unpacked": null
+        },
+        {
+          "dir": "output",
+          "name": "q",
+          "net_type": "logic",
+          "packed": "[3:0]",
+          "unpacked": null
+        }
+      ],
+      "skipped": []
+    },
+    {
+      "ansi_header": true,
+      "instances": [],
+      "location": "unsupported.sv:37:1",
+      "name": "unsupported_child",
+      "nets": [],
+      "params": [
+        {
+          "default": "8",
+          "local": false,
+          "name": "W"
+        }
+      ],
+      "ports": [
+        {
+          "dir": "input",
+          "name": "i",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": null
+        },
+        {
+          "dir": "output",
+          "name": "o",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": null
+        }
+      ],
+      "skipped": []
+    },
+    {
+      "ansi_header": true,
+      "instances": [
+        {
+          "connection_count": 2,
+          "connection_style": "named",
+          "module": "unsupported_child",
+          "name": "u_c",
+          "param_overrides": []
+        }
+      ],
+      "location": "unsupported.sv:50:1",
+      "name": "unsupported_defparam",
+      "nets": [],
+      "params": [],
+      "ports": [
+        {
+          "dir": "input",
+          "name": "i",
+          "net_type": "logic",
+          "packed": "[7:0]",
+          "unpacked": null
+        },
+        {
+          "dir": "output",
+          "name": "o",
+          "net_type": "logic",
+          "packed": "[7:0]",
+          "unpacked": null
+        }
+      ],
+      "skipped": [
+        "defparam at unsupported.sv:56:5"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+[package]
+name = "rtlscope-graph"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Lays out what the RTLScope IR and its analyses describe: block, hierarchy and dataflow graphs, and state machines."
+
+[dependencies]
+rtlscope-ir.workspace = true
+rtlscope-analyse.workspace = true
+petgraph.workspace = true
+rust-sugiyama.workspace = true
+
+[dev-dependencies]
+rtlscope-fixtures.workspace = true
+rtlscope-sv.workspace = true
+rtlscope-elab.workspace = true
+insta.workspace = true

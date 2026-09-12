@@ -1,0 +1,158 @@
+---
+source: crates/rtlscope-cli/tests/dump_ir_golden.rs
+expression: "report(\"params.sv\", Some(\"params_top\"))"
+---
+{
+  "modules": [
+    {
+      "base_name": "params_subsub",
+      "instances": [],
+      "location": "params.sv:4:1",
+      "name": "params_subsub$W=16",
+      "nets": [
+        "[15:0] i",
+        "[15:0] o"
+      ],
+      "params": [
+        "parameter W = 16"
+      ],
+      "ports": [
+        "input  [15:0] i",
+        "output [15:0] o"
+      ],
+      "processes": [
+        {
+          "kind": "comb",
+          "location": "params.sv:11:12",
+          "reads": [
+            "i"
+          ],
+          "writes": [
+            "o"
+          ]
+        }
+      ]
+    },
+    {
+      "base_name": "params_sub",
+      "instances": [
+        {
+          "connections": [
+            ".i(i)",
+            ".o(o)"
+          ],
+          "name": "u_ss",
+          "of": "params_subsub$W=16"
+        }
+      ],
+      "location": "params.sv:15:1",
+      "name": "params_sub$W=16",
+      "nets": [
+        "[15:0] i",
+        "[15:0] o"
+      ],
+      "params": [
+        "parameter W = 16"
+      ],
+      "ports": [
+        "input  [15:0] i",
+        "output [15:0] o"
+      ],
+      "processes": []
+    },
+    {
+      "base_name": "params_subsub",
+      "instances": [],
+      "location": "params.sv:4:1",
+      "name": "params_subsub$W=8",
+      "nets": [
+        "[7:0] i",
+        "[7:0] o"
+      ],
+      "params": [
+        "parameter W = 8"
+      ],
+      "ports": [
+        "input  [7:0] i",
+        "output [7:0] o"
+      ],
+      "processes": [
+        {
+          "kind": "comb",
+          "location": "params.sv:11:12",
+          "reads": [
+            "i"
+          ],
+          "writes": [
+            "o"
+          ]
+        }
+      ]
+    },
+    {
+      "base_name": "params_sub",
+      "instances": [
+        {
+          "connections": [
+            ".i(i)",
+            ".o(o)"
+          ],
+          "name": "u_ss",
+          "of": "params_subsub$W=8"
+        }
+      ],
+      "location": "params.sv:15:1",
+      "name": "params_sub$W=8",
+      "nets": [
+        "[7:0] i",
+        "[7:0] o"
+      ],
+      "params": [
+        "parameter W = 8"
+      ],
+      "ports": [
+        "input  [7:0] i",
+        "output [7:0] o"
+      ],
+      "processes": []
+    },
+    {
+      "base_name": "params_top",
+      "instances": [
+        {
+          "connections": [
+            ".i(a)",
+            ".o(ya)"
+          ],
+          "name": "u_wide",
+          "of": "params_sub$W=16"
+        },
+        {
+          "connections": [
+            ".i(b)",
+            ".o(yb)"
+          ],
+          "name": "u_default",
+          "of": "params_sub$W=8"
+        }
+      ],
+      "location": "params.sv:26:1",
+      "name": "params_top",
+      "nets": [
+        "[15:0] a",
+        "[7:0] b",
+        "[15:0] ya",
+        "[7:0] yb"
+      ],
+      "params": [],
+      "ports": [
+        "input  [15:0] a",
+        "input  [7:0] b",
+        "output [15:0] ya",
+        "output [7:0] yb"
+      ],
+      "processes": []
+    }
+  ],
+  "top": "params_top"
+}

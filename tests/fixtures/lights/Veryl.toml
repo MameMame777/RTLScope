@@ -1,0 +1,11 @@
+[project]
+name = "lights"
+version = "0.1.0"
+
+[build]
+sources = ["src"]
+target = {type = "directory", path = "target"}
+filelist_type = "relative"
+exclude_std = true
+reset_type = "async_low"
+reset_low_suffix = "_n"

@@ -1,0 +1,13 @@
+/// What every module of the sequence agrees on.
+package Defs {
+    /// How many lights walk.
+    const LEDS: u32 = 4;
+
+    /// Clocks between one step of the walk and the next.
+    const TICKS: u32 = 24;
+
+    /// The light the walk starts from.
+    function first_led () -> logic<LEDS> {
+        return 1;
+    }
+}

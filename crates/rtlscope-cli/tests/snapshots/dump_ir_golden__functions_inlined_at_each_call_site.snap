@@ -1,0 +1,136 @@
+---
+source: crates/rtlscope-cli/tests/dump_ir_golden.rs
+expression: "report(\"function.sv\", Some(\"function_test\"))"
+---
+{
+  "modules": [
+    {
+      "base_name": "function_test",
+      "instances": [],
+      "location": "function.sv:7:1",
+      "name": "function_test",
+      "nets": [
+        "clk",
+        "[7:0] byte_in",
+        "c0",
+        "c1",
+        "[31:0] packed_lanes",
+        "[7:0] header",
+        "[31:0] ones",
+        "[9:0] code",
+        "[7:0] lane_sum",
+        "[7:0] rotated",
+        "[7:0] scratch",
+        "[31:0] count_ones8.0",
+        "[7:0] count_ones8.0.value",
+        "[9:0] control_code.1",
+        "control_code.1.a",
+        "control_code.1.b",
+        "[7:0] sum_lanes.2",
+        "[31:0] sum_lanes.2.lanes",
+        "[7:0] sum_lanes.2.total",
+        "[7:0] rotate_right8.3",
+        "[7:0] rotate_right8.3.value",
+        "[2:0] rotate_right8.3.amount",
+        "[7:0] rotate_right8.3.result"
+      ],
+      "params": [
+        "parameter DT = 34",
+        "parameter VC = 1",
+        "parameter LANES = 4",
+        "localparam DI = 98"
+      ],
+      "ports": [
+        "input  clk",
+        "input  [7:0] byte_in",
+        "input  c0",
+        "input  c1",
+        "input  [31:0] packed_lanes",
+        "output [7:0] header",
+        "output [31:0] ones",
+        "output [9:0] code",
+        "output [7:0] lane_sum",
+        "output [7:0] rotated"
+      ],
+      "processes": [
+        {
+          "kind": "comb",
+          "location": "function.sv:66:5",
+          "reads": [
+            "byte_in",
+            "scratch"
+          ],
+          "writes": [
+            "scratch",
+            "header"
+          ]
+        },
+        {
+          "kind": "comb",
+          "location": "function.sv:74:12",
+          "reads": [
+            "byte_in",
+            "count_ones8.0",
+            "count_ones8.0.value"
+          ],
+          "writes": [
+            "count_ones8.0.value",
+            "count_ones8.0",
+            "ones"
+          ]
+        },
+        {
+          "kind": "comb",
+          "location": "function.sv:75:12",
+          "reads": [
+            "c0",
+            "c1",
+            "control_code.1.b",
+            "control_code.1.a",
+            "control_code.1"
+          ],
+          "writes": [
+            "control_code.1.a",
+            "control_code.1.b",
+            "control_code.1",
+            "code"
+          ]
+        },
+        {
+          "kind": "comb",
+          "location": "function.sv:76:12",
+          "reads": [
+            "packed_lanes",
+            "sum_lanes.2.total",
+            "sum_lanes.2.lanes",
+            "sum_lanes.2"
+          ],
+          "writes": [
+            "sum_lanes.2.lanes",
+            "sum_lanes.2.total",
+            "sum_lanes.2",
+            "lane_sum"
+          ]
+        },
+        {
+          "kind": "comb",
+          "location": "function.sv:77:12",
+          "reads": [
+            "byte_in",
+            "rotate_right8.3.value",
+            "rotate_right8.3.result",
+            "rotate_right8.3"
+          ],
+          "writes": [
+            "rotate_right8.3.value",
+            "rotate_right8.3.amount",
+            "rotate_right8.3.result",
+            "rotate_right8.3",
+            "rotated"
+          ]
+        }
+      ]
+    }
+  ],
+  "top": "function_test"
+}

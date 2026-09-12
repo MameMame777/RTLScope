@@ -1,0 +1,23 @@
+/// The timer's two wires, bundled: who may enable it, and who sees it tick.
+///
+/// Three sides: the timer's own, the controller's that says when to count,
+/// and everyone else's, which watches and does not touch.
+interface Ticker {
+    var enable: logic;
+    var tick  : logic;
+
+    modport timer {
+        enable: input ,
+        tick  : output,
+    }
+
+    modport user {
+        enable: output,
+        tick  : input ,
+    }
+
+    modport watch {
+        enable: input,
+        tick  : input,
+    }
+}

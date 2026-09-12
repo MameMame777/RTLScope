@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  The `.exe` people mean when they say "the installer".
+
+  It is a Burn bundle, which is a small program that carries `rtlscope.wxs`'s MSI
+  inside it and runs it. That is worth one indirection for two reasons: an
+  `.exe` is what a browser will let somebody download and what they will
+  double-click without being told to, and a bundle can put a window and a
+  progress bar in front of the install where a bare MSI just does it.
+
+  The MSI is still built and still shipped, because that is the thing to hand
+  an IT department and the thing `msiexec /qn` takes in a script.
+-->
+
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:bal="http://wixtoolset.org/schemas/v4/wxs/bal">
+
+  <Bundle
+      Name="RTLScope"
+      Manufacturer="RTLScope"
+      Version="$(var.Version)"
+      UpgradeCode="70b15e6f-27fa-41bb-91f0-96334a6b2b81"
+      IconSourceFile="$(var.Assets)\rtlscope.ico"
+      Compressed="yes">
+
+    <BootstrapperApplication>
+      <!-- No licence page: there is no agreement to present, and a dialog
+           asking somebody to accept nothing is a dialog that teaches them to
+           click through dialogs. -->
+      <bal:WixStandardBootstrapperApplication
+          Theme="hyperlinkLicense"
+          LicenseUrl=""
+          LogoFile="$(var.Assets)\rtlscope-64.png"
+          SuppressOptionsUI="yes" />
+    </BootstrapperApplication>
+
+    <Chain>
+      <MsiPackage
+          SourceFile="$(var.Msi)"
+          Visible="no"
+          Vital="yes" />
+    </Chain>
+  </Bundle>
+</Wix>

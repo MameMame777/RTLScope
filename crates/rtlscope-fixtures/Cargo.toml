@@ -1,0 +1,10 @@
+[package]
+name = "rtlscope-fixtures"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+description = "Locates the shared SystemVerilog fixtures and checks they are legal SystemVerilog."
+
+[dependencies]

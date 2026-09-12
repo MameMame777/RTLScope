@@ -1,0 +1,7 @@
+---
+source: crates/rtlscope-cli/tests/depth_golden.rs
+expression: "rendered(\"pipeline3.sv\", Some(\"pipeline3\"), \"in_dat\", \"out_data\")"
+---
+E004 no signal `in_dat`
+  did you mean:
+    in_data

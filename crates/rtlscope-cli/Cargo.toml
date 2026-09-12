@@ -1,0 +1,37 @@
+[package]
+name = "rtlscope-cli"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Command line front end for RTLScope."
+
+[lib]
+name = "rtlscope_cli"
+path = "src/lib.rs"
+
+[[bin]]
+name = "rtlscope"
+path = "src/main.rs"
+
+[dependencies]
+rtlscope-ir.workspace = true
+rtlscope-sv.workspace = true
+rtlscope-veryl.workspace = true
+rtlscope-read.workspace = true
+rtlscope-elab.workspace = true
+rtlscope-graph.workspace = true
+rtlscope-analyse.workspace = true
+rtlscope-tb.workspace = true
+rtlscope-wave.workspace = true
+rtlscope-yosys.workspace = true
+dunce.workspace = true
+clap.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+anyhow.workspace = true
+
+[dev-dependencies]
+rtlscope-fixtures.workspace = true
+insta.workspace = true
+dunce.workspace = true

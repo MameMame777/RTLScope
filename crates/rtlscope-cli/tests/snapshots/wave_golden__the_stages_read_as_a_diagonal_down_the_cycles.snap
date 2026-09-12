@@ -1,0 +1,20 @@
+---
+source: crates/rtlscope-cli/tests/wave_golden.rs
+expression: "rtlscope_cli::cmd::wave::stages_text(&view)"
+---
+clk — 3 stage(s) deep over 40 cycle(s); showing 0 .. 31
+read at `tb.dut.clk`
+
+            0         10        20        30
+  stage 0   ####....####....####....####....
+  stage 1   .####....####....####....####...
+  stage 2   ..####....####....####....####..
+
+  #  carrying    ~  carrying what it carried last cycle — a stall
+  .  empty       ?  undriven     (blank)  not in the dump
+
+  stage 0   valid `valid_d1`             value `data_d1`            16 busy, 0 held   (2 register(s), 2 in the dump)
+  stage 1   valid `valid_d2`             value `data_d2`            16 busy, 0 held   (2 register(s), 2 in the dump)
+  stage 2   valid `valid_d3`             value `data_d3`            16 busy, 0 held   (2 register(s), 2 in the dump)
+
+Nothing was left out.

@@ -1,0 +1,20 @@
+---
+source: crates/rtlscope-cli/tests/depth_golden.rs
+expression: "rendered(\"counter.sv\", None, \"en\", \"count\")"
+---
+en -> count: at least 1 clock(s) on clk
+
+  Something on the way holds itself up — a counter, a state machine,
+  a register that shifts into itself — so the walk can go round again and
+  there is no longest path. What it takes in practice is a question for a
+  dump, not for the structure.
+  note: `count` feeds itself, so the walk can go round again; if it shifts through itself, the depth is a count of bits that RTLScope does not take
+
+W002 1 register(s) do not advance every cycle
+  count
+    under if (en)
+  The structure is still this deep; the timing is not fixed.
+
+1 way(s) through
+  1:
+    count at <fixtures>/counter.sv:9:26  (gated)

@@ -1,0 +1,21 @@
+[package]
+name = "rtlscope-wave"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Reading VCD/FST dumps and decoding the protocols on them"
+
+[dependencies]
+rtlscope-ir.workspace = true
+rtlscope-analyse.workspace = true
+wellen.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+rtlscope-sv.workspace = true
+rtlscope-elab.workspace = true
+rtlscope-fixtures.workspace = true
+rtlscope-tb.workspace = true

@@ -1,0 +1,34 @@
+---
+source: crates/rtlscope-cli/tests/wave_golden.rs
+expression: "rtlscope_cli::cmd::wave::protocols_text()"
+---
+protocols
+
+  pixel
+    A valid-with-markers pixel stream: `valid` with `sof`/`eol`/`eof`/`err`
+    and no back-pressure. Counts frames, lines and pixels, and reports any
+    line whose length disagrees with the rest.
+    channels: clock valid [data] [sof] [eol] [eof] [err]
+
+  axis
+    AXI4-Stream as video carries it: a beat is `tvalid && tready`, `tuser`
+    bit 0 starts a frame and `tlast` ends a line. Counts frames, lines and
+    beats, and measures how often the sink held the source up.
+    channels: clock tvalid tready [tdata] [tlast] [tuser] [tkeep]
+
+  axi4
+    AXI4, the memory-mapped kind, without IDs: AW+W+B folded into one write
+    and AR+R into one read, each with its address, beat count and response.
+    Reports a VALID that dropped before READY, or a payload that changed
+    while it waited, and how long each channel was kept waiting.
+    channels: clock [awvalid] [awready] [awaddr] [awlen] [awsize] [awburst] [wvalid] [wready] [wdata] [wstrb] [wlast] [bvalid] [bready] [bresp] [arvalid] [arready] [araddr] [arlen] [arsize] [arburst] [rvalid] [rready] [rdata] [rresp] [rlast]
+
+  i2c
+    I²C, and the SCCB dialect a camera speaks: START, bytes with their
+    acknowledgements, repeated START and STOP. Event-driven, so the bus
+    clock's duty cycle does not matter. Bind an open-drain model inverted,
+    as `scl=!scl_drive_low`.
+    channels: scl sda
+
+  Names in brackets are optional; leaving one out narrows what can be
+  said, and the report says which.

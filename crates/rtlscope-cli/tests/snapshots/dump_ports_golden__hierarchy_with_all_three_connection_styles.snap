@@ -1,0 +1,286 @@
+---
+source: crates/rtlscope-cli/tests/dump_ports_golden.rs
+expression: "report(\"hier.sv\")"
+---
+{
+  "files": [
+    "hier.sv"
+  ],
+  "modules": [
+    {
+      "ansi_header": true,
+      "instances": [],
+      "location": "hier.sv:4:1",
+      "name": "hier_alu",
+      "nets": [],
+      "params": [
+        {
+          "default": "32",
+          "local": false,
+          "name": "W"
+        }
+      ],
+      "ports": [
+        {
+          "dir": "input",
+          "name": "a",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "b",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "op",
+          "net_type": "logic",
+          "packed": "[1:0]",
+          "unpacked": null
+        },
+        {
+          "dir": "output",
+          "name": "y",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": null
+        }
+      ],
+      "skipped": []
+    },
+    {
+      "ansi_header": true,
+      "instances": [],
+      "location": "hier.sv:24:1",
+      "name": "hier_regfile",
+      "nets": [
+        {
+          "name": "regs",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": "[0:((1 << AW) - 1)]"
+        }
+      ],
+      "params": [
+        {
+          "default": "32",
+          "local": false,
+          "name": "W"
+        },
+        {
+          "default": "4",
+          "local": false,
+          "name": "AW"
+        }
+      ],
+      "ports": [
+        {
+          "dir": "input",
+          "name": "clk",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "we",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "waddr",
+          "net_type": "logic",
+          "packed": "[(AW - 1):0]",
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "wdata",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "raddr",
+          "net_type": "logic",
+          "packed": "[(AW - 1):0]",
+          "unpacked": null
+        },
+        {
+          "dir": "output",
+          "name": "rdata",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": null
+        }
+      ],
+      "skipped": []
+    },
+    {
+      "ansi_header": true,
+      "instances": [],
+      "location": "hier.sv:47:1",
+      "name": "hier_ctrl",
+      "nets": [],
+      "params": [],
+      "ports": [
+        {
+          "dir": "input",
+          "name": "clk",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "rst_n",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "start",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "output",
+          "name": "busy",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        }
+      ],
+      "skipped": []
+    },
+    {
+      "ansi_header": true,
+      "instances": [
+        {
+          "connection_count": 4,
+          "connection_style": "named",
+          "module": "hier_alu",
+          "name": "u_alu",
+          "param_overrides": [
+            ".W(W)"
+          ]
+        },
+        {
+          "connection_count": 6,
+          "connection_style": "positional",
+          "module": "hier_regfile",
+          "name": "u_rf",
+          "param_overrides": [
+            ".W(W)",
+            ".AW(4)"
+          ]
+        },
+        {
+          "connection_count": 0,
+          "connection_style": "wildcard",
+          "module": "hier_ctrl",
+          "name": "u_ctrl",
+          "param_overrides": []
+        }
+      ],
+      "location": "hier.sv:63:1",
+      "name": "hier_top",
+      "nets": [
+        {
+          "name": "rf_rdata",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": null
+        },
+        {
+          "name": "alu_y",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": null
+        }
+      ],
+      "params": [
+        {
+          "default": "32",
+          "local": false,
+          "name": "W"
+        }
+      ],
+      "ports": [
+        {
+          "dir": "input",
+          "name": "clk",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "rst_n",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "start",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "op",
+          "net_type": "logic",
+          "packed": "[1:0]",
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "raddr",
+          "net_type": "logic",
+          "packed": "[3:0]",
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "waddr",
+          "net_type": "logic",
+          "packed": "[3:0]",
+          "unpacked": null
+        },
+        {
+          "dir": "input",
+          "name": "we",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        },
+        {
+          "dir": "output",
+          "name": "result",
+          "net_type": "logic",
+          "packed": "[(W - 1):0]",
+          "unpacked": null
+        },
+        {
+          "dir": "output",
+          "name": "busy",
+          "net_type": "logic",
+          "packed": null,
+          "unpacked": null
+        }
+      ],
+      "skipped": []
+    }
+  ]
+}

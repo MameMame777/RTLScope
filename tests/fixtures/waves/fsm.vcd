@@ -1,0 +1,77 @@
+$comment
+  Written by hand, not recorded, which the other dumps in this folder are not.
+  A state machine needs a dump to project onto the FSM diagram, and none of the
+  recorded ones has a machine in it: fsm.sv is the only fixture whose next state
+  a case on itself decides, and nothing had ever simulated it.
+
+  Kept by hand rather than generated because it is short enough to read, it is
+  the same either way on every machine, and reproducing it needs no toolchain.
+  Every value below follows from fsm.sv, so the two have to be edited together:
+
+    always_ff : !rst_n -> S_IDLE, else state <= next_state
+    always_comb: next_state = state, then
+                 S_IDLE : start -> S_RUN
+                 S_RUN  :          S_WAIT
+                 S_WAIT : done  -> S_IDLE
+                 default:          S_IDLE
+    assign     : busy = (state != S_IDLE)
+
+  So the run is: held in reset, released, started, one clock in S_RUN, waiting
+  until done, then home. Posedges are at 10, 30, 50, 70, 90, 110.
+$end
+$timescale 1ns $end
+$scope module tb $end
+$scope module dut $end
+$var wire 1 ! clk $end
+$var wire 1 " rst_n $end
+$var wire 1 # start $end
+$var wire 1 $ done $end
+$var wire 1 % busy $end
+$var wire 2 & state $end
+$var wire 2 ' next_state $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+0!
+0"
+0#
+0$
+0%
+b00 &
+b00 '
+#10
+1!
+#20
+0!
+1"
+#30
+1!
+#40
+0!
+1#
+b01 '
+#50
+1!
+b01 &
+1%
+b10 '
+#60
+0!
+0#
+#70
+1!
+b10 &
+#80
+0!
+1$
+b00 '
+#90
+1!
+b00 &
+0%
+#100
+0!
+0$
+#110
+1!

@@ -1,0 +1,10 @@
+---
+source: crates/rtlscope-cli/tests/depth_golden.rs
+expression: "rendered(\"cdc.sv\", Some(\"cdc_top\"), \"pulse\", \"flag_out\")"
+---
+E001 `pulse` and `flag_out` are not on one clock
+  the road passes src_clk and dst_clk
+    at flag_src
+    at u_child.flag_sync1
+  "how many clocks" has no answer across a crossing; `rtlscope cdc`
+  reports the crossing itself

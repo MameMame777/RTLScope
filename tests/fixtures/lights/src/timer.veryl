@@ -1,0 +1,24 @@
+/// Counts while enabled, and says so once every LIMIT clocks.
+module Timer #(
+    param LIMIT: u32 = Defs::TICKS,
+) (
+    i_clk: input   clock        ,
+    i_rst: input   reset        ,
+    t    : modport Ticker::timer,
+) {
+    var count: logic<8>;
+
+    always_ff {
+        if_reset {
+            count = 0;
+        } else if !t.enable {
+            count = 0;
+        } else if count == LIMIT - 1 {
+            count = 0;
+        } else {
+            count = count + 1;
+        }
+    }
+
+    assign t.tick = t.enable && (count == LIMIT - 1);
+}

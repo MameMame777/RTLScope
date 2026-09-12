@@ -1,0 +1,19 @@
+---
+source: crates/rtlscope-cli/tests/wave_golden.rs
+expression: "rtlscope_cli::cmd::wave::decode_text(&report)"
+---
+i2c
+
+             1  transfers
+             1  starts
+             1  stops
+             4  bytes
+
+1 transaction(s)
+          20  sccb-write   device=0x3c  register=0x300a  value=0x56
+
+Nothing was skipped.
+
+read from
+  scl      tb.scl
+  sda      tb.sda

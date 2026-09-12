@@ -1,0 +1,14 @@
+---
+source: crates/rtlscope-cli/tests/depth_golden.rs
+expression: "rendered(\"trace_demo.sv\", Some(\"trace_demo\"), \"in_data\", \"out_data\")"
+---
+in_data -> out_data: 1 clock(s) on clk
+
+W002 1 register(s) do not advance every cycle
+  staged
+    under if (gate)
+  The structure is still this deep; the timing is not fixed.
+
+1 way(s) through
+  1:
+    staged at <fixtures>/trace_demo.sv:63:17  (gated)

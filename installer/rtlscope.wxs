@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  The Windows installer for RTLScope.
+
+  What it puts on a machine: the three binaries in one folder, that folder on
+  the system PATH, a Start-menu shortcut, and an entry in Add or Remove
+  Programs that takes all of it away again.
+
+  Three decisions worth saying out loud.
+
+  It installs for the person who ran it, not for the machine. A tool somebody
+  is trying out should not need an administrator, and everything this one wants
+  — a folder, a PATH entry, a Start-menu shortcut, a line in the "Open with"
+  list — has a per-user home that works exactly as well. `Scope="perMachine"`
+  and `LocalAppDataFolder` → `ProgramFiles6432Folder` is the whole difference if
+  a machine-wide install is ever wanted; `HKMU` already points at whichever hive
+  is right.
+
+  It registers RTLScope under `OpenWithProgids` and never as the default handler
+  for anything. `.sv` belongs to whichever editor the reader already chose, and
+  quietly taking it would be the installer deciding something that is not its
+  to decide. This way RTLScope appears in the right-click "Open with" list, and a
+  reader who wants it as the default can say so once in Explorer.
+
+  Version and paths come in on the command line rather than being written here,
+  so that `scripts/package.ps1` is the only place that knows where the build
+  output lives.
+-->
+
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package
+      Name="RTLScope"
+      Manufacturer="RTLScope"
+      Version="$(var.Version)"
+      UpgradeCode="9ed68271-8758-45d1-86f3-85bd717f2981"
+      Scope="perUser"
+      Compressed="yes"
+      InstallerVersion="500">
+
+    <!-- An install over an older one replaces it instead of standing beside
+         it, which is what a reader means by "update".
+
+         `AllowSameVersionUpgrades` because WiX mints a new ProductCode every
+         build while the version stays 0.1.0, and without it a rebuilt 0.1.0
+         over an installed 0.1.0 is neither an upgrade nor a fresh install:
+         the package decides it is already there and does nothing at all.
+         Measured, and it is indistinguishable from an installer that is
+         broken. -->
+    <MajorUpgrade
+        AllowSameVersionUpgrades="yes"
+        DowngradeErrorMessage="A newer version of RTLScope is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- The `.ico` on the end of the Id is not decoration and not a name.
+         Windows Installer writes this file out under exactly that name, into
+         `%APPDATA%\Microsoft\Installer\{ProductCode}\`, and the shell then
+         decides how to read it from the extension. Called `RtlScopeIcon.exe`, as
+         it was, the shell tried to pull icon resource 0 out of a PE — and the
+         file is raw ICO, so there was nothing to pull and the Start-menu
+         shortcut and the Apps-and-features entry both drew the blank default.
+         Measured on an installed copy: 18101 bytes beginning `00 00 01 00`,
+         under a name ending `.exe`. -->
+    <Icon Id="RtlScopeIcon.ico" SourceFile="$(var.Assets)\rtlscope.ico" />
+    <Property Id="ARPPRODUCTICON" Value="RtlScopeIcon.ico" />
+    <Property Id="ARPCOMMENTS" Value="Read synthesisable SystemVerilog, and look at what it says." />
+
+    <StandardDirectory Id="LocalAppDataFolder">
+      <Directory Id="ProgramsFolder" Name="Programs">
+        <Directory Id="INSTALLFOLDER" Name="RTLScope" />
+      </Directory>
+    </StandardDirectory>
+    <StandardDirectory Id="ProgramMenuFolder" />
+
+    <Feature Id="Main" Title="RTLScope" Level="1">
+      <ComponentGroupRef Id="Program" />
+    </Feature>
+
+    <ComponentGroup Id="Program" Directory="INSTALLFOLDER">
+      <Component Id="Gui">
+        <File Id="rtlscope_gui.exe" Source="$(var.BuildDir)\rtlscope-gui.exe" KeyPath="yes">
+          <Shortcut
+              Id="StartMenuShortcut"
+              Directory="ProgramMenuFolder"
+              Name="RTLScope"
+              Description="Read a SystemVerilog design"
+              Icon="RtlScopeIcon.ico"
+              WorkingDirectory="INSTALLFOLDER"
+              Advertise="no" />
+        </File>
+      </Component>
+
+      <Component Id="Cli">
+        <File Id="rtlscope.exe" Source="$(var.BuildDir)\rtlscope.exe" KeyPath="yes" />
+      </Component>
+
+      <Component Id="Mcp">
+        <File Id="rtlscope_mcp.exe" Source="$(var.BuildDir)\rtlscope-mcp.exe" KeyPath="yes" />
+      </Component>
+
+      <!-- Beside the binaries so the shortcut and the file associations have a
+           picture to point at that survives the exe being replaced. -->
+      <Component Id="Mark">
+        <File Id="rtlscope.ico" Source="$(var.Assets)\rtlscope.ico" KeyPath="yes" />
+      </Component>
+
+      <Component Id="Readme">
+        <File Id="README.md" Source="$(var.Root)\README.md" KeyPath="yes" />
+      </Component>
+
+      <!-- `rtlscope` is a command-line tool as much as a window, so the folder
+           goes on PATH. `Permanent="no"` is the point: uninstalling takes the
+           entry back out. -->
+      <Component Id="PathEntry" Guid="658eebd0-73f9-4243-b37a-359cf53be1b5">
+        <Environment
+            Id="UserPath"
+            Name="PATH"
+            Value="[INSTALLFOLDER]"
+            Action="set"
+            Part="last"
+            System="no"
+            Permanent="no" />
+        <RegistryValue
+            Root="HKMU"
+            Key="SOFTWARE\RTLScope"
+            Name="InstallFolder"
+            Type="string"
+            Value="[INSTALLFOLDER]"
+            KeyPath="yes" />
+      </Component>
+
+      <Component Id="OpenWith" Guid="3cf7f9dc-11cf-4ba8-b06e-a5f03d8ec83e">
+        <!-- A design. Opening one is the whole of what the window does, so
+             this is the association that carries its weight. -->
+        <RegistryValue
+            Root="HKMU" Key="SOFTWARE\Classes\RTLScope.Design"
+            Type="string" Value="SystemVerilog design" KeyPath="yes" />
+        <RegistryValue
+            Root="HKMU" Key="SOFTWARE\Classes\RTLScope.Design\DefaultIcon"
+            Type="string" Value="[INSTALLFOLDER]rtlscope.ico" />
+        <RegistryValue
+            Root="HKMU" Key="SOFTWARE\Classes\RTLScope.Design\shell\open\command"
+            Type="string" Value="&quot;[INSTALLFOLDER]rtlscope-gui.exe&quot; &quot;%1&quot;" />
+
+        <!-- A recording, which opens on its own: the window is a waveform
+             viewer with or without the RTL beside it. Sources dropped in
+             afterwards are matched against whatever is already open, so this
+             association is a whole gesture and not half of one. -->
+        <RegistryValue
+            Root="HKMU" Key="SOFTWARE\Classes\RTLScope.Dump"
+            Type="string" Value="Waveform recording" />
+        <RegistryValue
+            Root="HKMU" Key="SOFTWARE\Classes\RTLScope.Dump\DefaultIcon"
+            Type="string" Value="[INSTALLFOLDER]rtlscope.ico" />
+        <RegistryValue
+            Root="HKMU" Key="SOFTWARE\Classes\RTLScope.Dump\shell\open\command"
+            Type="string" Value="&quot;[INSTALLFOLDER]rtlscope-gui.exe&quot; &quot;%1&quot;" />
+
+        <!-- Offered, never imposed. -->
+        <RegistryValue
+            Root="HKMU" Key="SOFTWARE\Classes\.sv\OpenWithProgids"
+            Name="RTLScope.Design" Type="string" Value="" />
+        <RegistryValue
+            Root="HKMU" Key="SOFTWARE\Classes\.v\OpenWithProgids"
+            Name="RTLScope.Design" Type="string" Value="" />
+        <RegistryValue
+            Root="HKMU" Key="SOFTWARE\Classes\.vcd\OpenWithProgids"
+            Name="RTLScope.Dump" Type="string" Value="" />
+        <RegistryValue
+            Root="HKMU" Key="SOFTWARE\Classes\.fst\OpenWithProgids"
+            Name="RTLScope.Dump" Type="string" Value="" />
+      </Component>
+    </ComponentGroup>
+  </Package>
+</Wix>

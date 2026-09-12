@@ -1,0 +1,20 @@
+[package]
+name = "rtlscope-sv"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Parses SystemVerilog with sv-parser and lowers it to the RTLScope unresolved IR."
+
+[dependencies]
+rtlscope-ir.workspace = true
+sv-parser.workspace = true
+thiserror.workspace = true
+dunce.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sourcemap.workspace = true
+
+[dev-dependencies]
+rtlscope-fixtures.workspace = true
+rtlscope-elab.workspace = true
