@@ -84,7 +84,6 @@
               Directory="ProgramMenuFolder"
               Name="RTLScope"
               Description="Read a SystemVerilog design"
-              Icon="RtlScopeIcon.ico"
               WorkingDirectory="INSTALLFOLDER"
               Advertise="no" />
         </File>
